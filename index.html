@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #7ED321;
+            --accent-color: #F5A623;
+            --background-color: #F0F0F0;
+            --text-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #e09000;
+        }
+
+        .calculator {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6bc30d;
+        }
+
+        #result {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">BMI Calculator</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#calculator">Calculate BMI</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="home" class="hero">
+            <h1>Calculate Your Body Mass Index</h1>
+            <p>Understand your health status with our easy-to-use BMI calculator.</p>
+            <a href="#calculator" class="cta-button">Calculate Your BMI</a>
+        </section>
+
+        <section id="calculator" class="calculator">
+            <h2>BMI Calculator</h2>
+            <div class="input-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" placeholder="Enter your height" required>
+            </div>
+            <div class="input-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" placeholder="Enter your weight" required>
+            </div>
+            <button onclick="calculateBMI()">Calculate BMI</button>
+            <div id="result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 BMI Calculator. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculateBMI() {
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const resultDiv = document.getElementById('result');
+
+            if (height && weight) {
+                const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+                let category = '';
+                let advice = '';
+
+                if (bmi < 18.5) {
+                    category = 'Underweight';
+                    advice = 'Consider consulting a nutritionist to gain healthy weight.';
+                } else if (bmi >= 18.5 && bmi < 25) {
+                    category = 'Normal weight';
+                    advice = 'Maintain your healthy lifestyle with a balanced diet and regular exercise.';
+                } else if (bmi >= 25 && bmi < 30) {
+                    category = 'Overweight';
+                    advice = 'Focus on a balanced diet and increase your physical activity.';
+                } else {
+                    category = 'Obese';
+                    advice = 'Consult a healthcare professional for a personalized weight management plan.';
+                }
+
+                resultDiv.innerHTML = `
+                    <h3>Your BMI: ${bmi}</h3>
+                    <p>Category: ${category}</p>
+                    <p>Advice: ${advice}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p>Please enter both height and weight.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
